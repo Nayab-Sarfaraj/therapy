@@ -91,7 +91,7 @@ const About = () => {
               <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat rounded-lg"
                 style={{
-                  backgroundImage: `url('https://images.pexels.com/photos/5699456/pexels-photo-5699456.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop')`,
+                  backgroundImage: `url('/pic.jpg')`,
                 }}
               ></div>
             </div>
