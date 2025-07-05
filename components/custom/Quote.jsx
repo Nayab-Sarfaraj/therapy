@@ -1,9 +1,31 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 export default function Quote() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
   return (
     <section
-      className="relative py-16 md:py-20 px-4 md:px-8 lg:px-16"
+      ref={sectionRef}
+      className={`relative py-16 md:py-20 px-4 md:px-8 lg:px-16 transition-opacity duration-1000 ease-out ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
       style={{
         height: "423.975px",
         fontFamily: "freight-sans-pro",
@@ -13,11 +35,11 @@ export default function Quote() {
         color: "rgb(65, 65, 63)",
       }}
     >
-      {/* Background Image */}
+      {/* Background Image from public folder */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url('https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')`,
+          backgroundImage: `url('/beach.jpg')`,
         }}
       >
         <div
@@ -28,7 +50,6 @@ export default function Quote() {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col justify-center h-full">
         <blockquote
-          className="mb-8"
           style={{
             color: "rgb(0, 0, 0)",
             fontFamily: "freight-display-pro",

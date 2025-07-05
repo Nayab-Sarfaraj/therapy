@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronRight, CircleChevronRightIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CircleChevronRightIcon } from "lucide-react";
 
 const faqs = [
   {
@@ -20,14 +20,37 @@ const faqs = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
+    };
+  }, []);
+
   return (
-    <section className="py-12 md:py-16 px-4 md:px-8 lg:px-16 bg-white font-freightDisplay">
-      <div className="max-w-3xl mx-auto">
+    <section
+      ref={sectionRef}
+      className="py-12 md:py-16 px-4 md:px-8 lg:px-16 bg-white font-freightDisplay"
+    >
+      <div
+        className={`max-w-3xl mx-auto transition-opacity duration-1000 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <h3 className="text-[#6b8db5] text-3xl md:text-4xl mb-10 text-center">
           Frequently Asked Questions
         </h3>
