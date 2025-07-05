@@ -13,7 +13,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Jennifer Hahm, Ph.D. - Psychological Services",
+  title: "Serena Blake, Ph.D. - Psychological Services",
   description:
     "Psychological Care for Change, Insight, and Well-Being. Offering individual psychotherapy for adults via telehealth.",
 };
